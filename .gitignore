@@ -1,3 +1,6 @@
 *.zip
-.DS_Store
 강의자료/
+.DS_Store
+._.DS_Store
+**/.DS_Store
+**/._.DS_Store
