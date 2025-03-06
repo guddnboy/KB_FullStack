@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CSS3 Selector Basic</title>
+    <style>
+      li {
+        list-style: none;
+        float: left;
+        padding: 1em;
+      }
+      li:nth-child(n) {
+        background-color: aqua;
+      }
+      li:nth-child(2n + 1) {
+        background-color: blue;
+      }
+      li:first-child {
+        border-radius: 1em 0 0 1em;
+      }
+      li:last-child {
+        border-radius: 0 1em 1em 0;
+      }
+    </style>
+  </head>
+  <body>
+    <ul>
+      <li>첫번째</li>
+      <li>두번째</li>
+      <li>세번째</li>
+      <li>네번째</li>
+      <li>다섯번째</li>
+      <li>여섯번째</li>
+      <li>일곱번째</li>
+    </ul>
+  </body>
+</html>
