@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>closure</title>
+  </head>
+  <body>
+    <script>
+      function outerFn(x) {
+        let num = x;
+
+        return function (y) {
+          return num + y;
+        };
+      }
+
+      //   outerFn 호출
+      const add = outerFn(10); // function(y) {return 10(num) + y; }
+
+      console.log(add(5));
+    </script>
+  </body>
+</html>
