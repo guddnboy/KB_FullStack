@@ -18,6 +18,19 @@
       }
 
       repeatFn(3, callFn);
+
+      // 풀이
+      function testFn(callback, num) {
+        for (let i = 0; i < num; i++) {
+          callback();
+        }
+      }
+
+      const fn = () => {
+        alert('함수 호출!');
+      };
+
+      testFn(fn, 5);
     </script>
   </body>
 </html>
