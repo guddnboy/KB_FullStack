@@ -8,16 +8,43 @@
   <body>
     <script>
       const month = new Date().getMonth() + 1;
+      let season;
 
-      if (3 <= month && month <= 5) {
-        alert('봄입니다.');
-      } else if (6 <= month && month <= 8) {
-        alert('여름입니다.');
-      } else if (9 <= month && month <= 11) {
-        alert('가을입니다.');
+      if (month === 12 || month === 1 || month === 2) {
+        season = '겨울';
+      } else if (month <= 5) {
+        season = '봄';
+      } else if (month <= 8) {
+        season = '여름';
       } else {
-        alert('겨울입니다.');
+        season = '가을';
       }
+
+      let season2;
+      switch (month) {
+        case 12:
+        case 1:
+        case 2:
+          season2 = '겨울';
+          break;
+        case 3:
+        case 4:
+        case 5:
+          season2 = '봄';
+          break;
+        case 6:
+        case 7:
+        case 8:
+          season2 = '여름';
+          break;
+        case 9:
+        case 10:
+        case 1:
+          season2 = '가을';
+          break;
+      }
+
+      alert(season, season2);
     </script>
   </body>
 </html>
