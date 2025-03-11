@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      window.onload = function () {
+        let output = '';
+
+        for (let i = 0; i < 10; i++) {
+          let tmp = `<h1>Header - ${i}</h1>`;
+          output += tmp;
+        }
+
+        const b = document.querySelector('body');
+        b.innerHTML = output;
+        b.innerText = output;
+      };
+    </script>
+  </head>
+  <body></body>
+</html>
