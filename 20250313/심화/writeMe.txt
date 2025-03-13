@@ -1,0 +1,2 @@
+Node.js is an open-source, cross-platform JavaScript runtime environment that executes JavaScript code outside of a web browser. It allows developers to use JavaScript to write command-line tools and server-side scripts—producing dynamic web page content before the page is sent to the user’s browser.
+Node.js 는 오픈 소스이며, 크로스 플랫폼인 JavaScript 런타임 환경입니다. 브라우저 밖에서도 JavaScript 코드를 실행할 수 있게 해주며, 서버 사이드 스크립팅을 통해 웹 페이지가 사용자에게 전송되기 전에 동적으로 웹 페이지 콘텐츠를 생성할 수 있도록 지원합니다.
