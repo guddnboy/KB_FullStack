@@ -20,3 +20,14 @@ jobs:
         run: |
           mkdir -p $TODAY/기본
           mkdir -p $TODAY/심화
+
+            touch $TODAY/기본/01.js
+            touch $TODAY/심화/01.js
+
+            - name: Commit and push changes
+              run: |
+                git config --global user.name 'github-actions[bot]'
+                git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+                git add $TODAY
+                git commit -m "폴더 생성 : $TODAY"
+                git push
