@@ -20,11 +20,3 @@ jobs:
         run: |
           mkdir -p $TODAY/기본
           mkdir -p $TODAY/심화
-
-      - name: Commit and push changes
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions@github.com"
-          git add .
-          git commit -m "평일 오전 8시 폴더 생성" || echo "No changes to commit"
-          git push
