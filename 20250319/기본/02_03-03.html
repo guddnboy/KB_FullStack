@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+  </head>
+  <body>
+    <div id="app">
+      <input type="text" v-bind:value="message" />
+      <br />
+      <img v-bind:src="imagePath" />
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+      const model = {
+        message: 'v-bind 디렉티브',
+        imagePath: 'https://contactsvc.bmaster.kro.kr/photos/18.jpg',
+      };
+
+      const vm = Vue.createApp({
+        name: 'App',
+        data() {
+          return model;
+        },
+      }).mount('#app');
+    </script>
+  </body>
+</html>

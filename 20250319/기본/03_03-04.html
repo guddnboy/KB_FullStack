@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+  </head>
+  <body>
+    <div id="app">
+      일반 입력 :
+      <input type="text" v-model="userInput" />
+      <br />
+      <div>입력한 값: {{userInput}}</div>
+
+      <!-- 바인드 + 이벤트 처리 :
+      <input type="text" v-bind="userInput" @input="changeInput" /> -->
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+      const model = {
+        userInput: '',
+      };
+
+      const vm = Vue.createApp({
+        name: 'App',
+        data() {
+          return model;
+        },
+        methods: {
+          changeInput(e) {
+            this.userInput = e.target.value;
+          },
+        },
+      }).mount('#app');
+    </script>
+  </body>
+</html>
