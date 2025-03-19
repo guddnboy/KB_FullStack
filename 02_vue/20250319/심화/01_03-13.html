@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <style>
+      #list {
+        width: 600px;
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      #list td,
+      #list th {
+        border: 1px solid black;
+        text-align: center;
+      }
+      #list > thead > tr {
+        color: yellow;
+        background-color: purple;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <table id="list" v-model="members" border="1">
+        <thead>
+          <th>번호</th>
+          <th>이름</th>
+          <th>전화번호</th>
+        </thead>
+        <tr v-for="member in  members" :key="member.number">
+          <td>{{member.number}}</td>
+          <td>{{member.name}}</td>
+          <td>{{member.phone}}</td>
+        </tr>
+      </table>
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+      const model = {
+        members: [
+          {
+            number: 1011,
+            name: 'RM',
+            phone: '010-1234-5678',
+          },
+          {
+            number: 1012,
+            name: '정국',
+            phone: '010-2345-6789',
+          },
+          {
+            number: 1013,
+            name: '제이홉',
+            phone: '010-3456-7890',
+          },
+          {
+            number: 1014,
+            name: '슈가',
+            phone: '010-4567-8901',
+          },
+        ],
+      };
+      const vm = Vue.createApp({
+        name: 'App',
+        data() {
+          return model;
+        },
+      }).mount('#app');
+    </script>
+  </body>
+</html>
