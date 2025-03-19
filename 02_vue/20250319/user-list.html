@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>사용자 조회 페이지</title>
+    <link rel="stylesheet" href="./user-list-style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="container">
+        <h1>사용자 목록 관리</h1>
+        <input
+          type="text"
+          v-model.trim="newName"
+          placeholder="이름을 입력하세요" />
+        <span class="error" v-if="newName.length === 0">이름을 입력하세요</span>
+        <br />
+        <input
+          type="text"
+          v-model="newPhone"
+          placeholder="전화번호를 입력하세요" />
+        <span class="error" v-if="newPhone.length === 0"
+          >전화번호를 입력하세요
+        </span>
+        <br />
+        <select v-model="newRegion">
+          <option value="" disabled selected>지역 선택</option>
+          <option value="서울">서울</option>
+          <option value="부산">부산</option>
+          <option value="인천">인천</option>
+          <option value="대구">대구</option>
+        </select>
+        <span class="error" v-if="newRegion.length === 0"
+          >지역을 선택하세요</span
+        >
+        <br />
+        <button @click="addUser">사용자 추가</button>
+
+        <div class="controls">
+          <select v-model="selectRegion">
+            <option value="" selected disabled>지역 검색</option>
+            <option value="서울">서울</option>
+            <option value="부산">부산</option>
+            <option value="인천">인천</option>
+            <option value="대구">대구</option>
+          </select>
+        </div>
+
+        <table border="1">
+          <thead>
+            <th>번호</th>
+            <th>이름</th>
+            <th>전화번호</th>
+            <th>지역</th>
+            <th>삭제</th>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(user, index) in users"
+              class="user-item"
+              v-show="selectRegion === '' || user.region === selectRegion">
+              <td v-text="index  + 1"></td>
+              <td v-text="user.name"></td>
+              <td v-text="user.phone"></td>
+              <td v-text="user.region"></td>
+              <td><button @click="deleteUser(index)">삭제</button></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p v-if="users.length === 0">등록된 사용자가 없습니다.</p>
+
+        <p
+          v-if="users.length > 0 && !users.some((user)=> selectRegion === '' || user.region === selectRegion)">
+          해당 지역의 사용자가 없습니다.
+        </p>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+      const model = {
+        users: [
+          {
+            id: 1,
+            name: '신짱구',
+            phone: '010-1234-5678',
+            region: '서울',
+          },
+          {
+            id: 2,
+            name: '김철수',
+            phone: '010-9876-5432',
+            region: '부산',
+          },
+          {
+            id: 3,
+            name: '이유리',
+            phone: '010-5555-6666',
+            region: '대구',
+          },
+        ],
+
+        newName: '',
+        newPhone: '',
+        newRegion: '',
+
+        selectRegion: '',
+      };
+      const vm = Vue.createApp({
+        name: 'App',
+        data() {
+          return model;
+        },
+        methods: {
+          addUser() {
+            if (this.newName && this.newPhone && this.newRegion) {
+              const user = {
+                id: Date.now(),
+                name: this.newName,
+                phone: this.newPhone,
+                region: this.newRegion,
+              };
+              this.users.push(user);
+
+              this.newName = '';
+              this.newPhone = '';
+              this.newRegion = '';
+            }
+          },
+          deleteUser(index) {
+            console.log(index);
+            this.users.splice(index, 1);
+          },
+
+          filterRegion(region) {
+            console.log(region);
+          },
+        },
+      }).mount('#app');
+    </script>
+  </body>
+</html>
