@@ -20,8 +20,8 @@ jobs:
         run: |
           mkdir -p 02_vue/$TODAY/기본
           mkdir -p 02_vue/$TODAY/심화
-          touch 02_vue/$TODAY/기본/01.js
-          touch 02_vue/$TODAY/심화/01.js
+          touch 02_vue/$TODAY/기본/01.html
+          touch 02_vue/$TODAY/심화/01.html
 
       - name: commit and push
         env:
