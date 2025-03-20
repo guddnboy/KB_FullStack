@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+  </head>
+  <body>
+    <div id="app">
+      <div
+        @contextmenu="ctxStop"
+        style="
+          position: absolute;
+          left: 5px;
+          top: 5px;
+          right: 5px;
+          bottom: 5px;
+        ">
+        <a href="https://facebook.com" @click="confirmFB">페이스북</a>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+      const model = {};
+      const vm = Vue.createApp({
+        name: 'App',
+        data() {
+          return model;
+        },
+        methods: {
+          ctxStop(e) {
+            e.preventDefault();
+          },
+          confirmFB(e) {
+            if (!confirm('페이스북으로 이동할까요?')) {
+              e.preventDefault();
+            }
+          },
+        },
+      }).mount('#app');
+    </script>
+  </body>
+</html>

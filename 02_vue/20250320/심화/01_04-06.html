@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+  </head>
+  <body>
+    <div id="app">
+      x: <input type="text" v-model.number="x" /><br />
+      y: <input type="text" v-model.number="y" /><br />
+      덧셈 결과 : {{ sum}}
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+      const model = {
+        x: 0,
+        y: 0,
+        sum: 0,
+      };
+      const vm = Vue.createApp({
+        name: 'App',
+        data() {
+          return model;
+        },
+        watch: {
+          x(current, old) {
+            console.log(current, old);
+            return (this.sum = current + this.y);
+          },
+          y(current, old) {
+            console.log(current, old);
+            return (this.sum = current + this.y);
+          },
+        },
+      }).mount('#app');
+    </script>
+  </body>
+</html>
