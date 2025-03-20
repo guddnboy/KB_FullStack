@@ -29,6 +29,6 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add $TODAY
+          git add 02_vue/$TODAY
           git commit -m "폴더 생성 : 02_vue/$TODAY" || exit 0  # 변경 사항 없으면 에러 방지
           git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git HEAD:main
