@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+  </head>
+  <body>
+    <div id="app">
+      <div>금액: <input type="text" v-model.number="balance" /></div>
+      <button @click="amount += parseInt(balance)">입금</button>
+      <button @click="amount -= parseInt(balance)">입출</button>
+      <div>
+        <h3>잔고 : {{amount}}</h3>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+      const model = {
+        amount: 0,
+        balance: 0,
+      };
+      const vm = Vue.createApp({
+        name: 'App',
+        data() {
+          return model;
+        },
+      }).mount('#app');
+    </script>
+  </body>
+</html>
