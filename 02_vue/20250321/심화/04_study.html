@@ -21,27 +21,45 @@
           <h1>FullStack Study</h1>
           <p>Vue+ 자바 기반의 풀스택 기술을 배웁니다.</p>
         </div>
-        <div class="bg-primary text-white">
-          <div class="d-flex">
-            <div class="justify-content-start">
-              <a href="#" class="btn btn-primary">
-                <i class="fa-solid fa-house"></i> FullStack</a
-              >
-              <a href="#" class="btn btn-primary" style="opacity: 0.8">메뉴1</a>
-              <a href="#" class="btn btn-primary" style="opacity: 0.8">메뉴2</a>
-              <a href="#" class="btn btn-primary" style="opacity: 0.8">메뉴3</a>
-            </div>
-            <div class="ms-auto"></div>
-            <div>
-              <button type="button" class="btn btn-primary">
-                <i class="fa-solid fa-user"></i> admin
-              </button>
-              <button type="button" class="btn btn-primary">
-                <i class="fa-solid fa-right-from-bracket"></i> 로그아웃
-              </button>
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+              <i class="fa-solid fa-house"></i> FullStack
+            </a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="#" style="opacity: 0.8">메뉴1</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#" style="opacity: 0.8">메뉴2</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#" style="opacity: 0.8">메뉴3</a>
+                </li>
+              </ul>
+              <div class="d-flex">
+                <button type="button" class="btn btn-primary me-2">
+                  <i class="fa-solid fa-user"></i> admin
+                </button>
+                <button type="button" class="btn btn-primary">
+                  <i class="fa-solid fa-right-from-bracket"></i> 로그아웃
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        </nav>
 
         <div class="mt-5">
           <div><h1>글목록</h1></div>
