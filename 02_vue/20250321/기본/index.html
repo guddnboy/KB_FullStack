@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./bootstrap.min.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="container">
+        <h1>Bootstrap Table</h1>
+
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>제목</th>
+              <th>작성자</th>
+              <th>등록일</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td><a href="#">글 제목 1</a></td>
+              <td>user01</td>
+              <td>2025-03-21</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td><a href="#">글 제목 2</a></td>
+              <td>user02</td>
+              <td>2025-03-22</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td><a href="#">글 제목 3</a></td>
+              <td>user03</td>
+              <td>2025-03-23</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td><a href="#">글 제목 4</a></td>
+              <td>user04</td>
+              <td>2025-03-24</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td><a href="#">글 제목 5</a></td>
+              <td>user05</td>
+              <td>2025-03-25</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h1 class="mt-5">
+          <i class="fa-solid fa-house"></i>
+          Fontawesome 테스트
+        </h1>
+        <div>
+          <button class="btn btn-primary mx-1">
+            <i class="fa-solid fa-envelope"></i> email
+          </button>
+          <button class="btn btn-success mx-1">
+            <i class="fa-solid fa-right-to-bracket"></i> login
+          </button>
+          <button class="btn btn-warning mx-1">
+            <i class="fa-solid fa-lock"></i> 비밀번호
+          </button>
+          <button class="btn btn-danger mx-1">
+            <i class="fa-solid fa-trash"></i> 삭제
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+      const model = {};
+      const vm = Vue.createApp({
+        name: 'App',
+        data() {
+          return model;
+        },
+      }).mount('#app');
+    </script>
+    <script src="./bootstrap.bundle.min.js"></script>
+  </body>
+</html>
