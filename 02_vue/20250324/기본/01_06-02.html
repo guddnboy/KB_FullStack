@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
+  </head>
+  <body>
+    <div id="app">
+      <button
+        :style="style1"
+        @mouseover.stop="overEvent"
+        @mouseout.stop="outEvent">
+        테스트
+      </button>
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+      const vm = Vue.createApp({
+        name: 'App',
+        data() {
+          return {
+            style1: {
+              backgroundColor: 'aqua',
+              color: 'black',
+            },
+          };
+        },
+        methods: {
+          overEvent() {
+            this.style1.backgroundColor = 'purple';
+            this.style1.color = 'white';
+          },
+          outEvent() {
+            this.style1.backgroundColor = 'aqua';
+            this.style1.color = 'black';
+          },
+        },
+      }).mount('#app');
+    </script>
+    <script src="./bootstrap.bundle.min.js"></script>
+  </body>
+</html>

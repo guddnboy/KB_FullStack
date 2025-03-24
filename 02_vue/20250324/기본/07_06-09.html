@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
+    <style>
+      .btnColor {
+        background-color: aqua;
+        color: black;
+      }
+      .btnAlign {
+        text-align: center;
+        width: 120px;
+      }
+      .btnBorder {
+        border: khaki dashed 1px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <input type="checkbox" v-model="btnStyle.btnColor" />색상<br />
+      <input type="checkbox" v-model="btnStyle.btnAlign" />정렬, 크기 <br />
+      <input type="checkbox" v-model="btnStyle.btnBorder" />테두리<br />
+      <button :class="btnStyle">버튼</button>
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+      const vm = Vue.createApp({
+        name: 'App',
+        data() {
+          return {
+            btnStyle: { btnColor: false, btnAlign: false, btnBorder: false },
+          };
+        },
+      }).mount('#app');
+    </script>
+    <script src="./bootstrap.bundle.min.js"></script>
+  </body>
+</html>

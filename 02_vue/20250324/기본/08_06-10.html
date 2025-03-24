@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
+    <style>
+      .score {
+        border: solid 1px black;
+      }
+      .warning {
+        background-color: skyblue;
+        color: purple;
+      }
+      .warnimage {
+        width: 18px;
+        height: 18px;
+        top: 5px;
+        position: relative;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div>1부터 100까지만 입력이 가능합니다.</div>
+      점수 :
+      <input
+        type="text"
+        class="score"
+        :class="isWarnning ? 'warning' : ''"
+        v-model.number="score" />
+      <img
+        src="https://contactsvc.bmaster.kro.kr/img/error.png"
+        class="warnimage"
+        v-if="isWarnning"
+        title="1부터
+        100까지만 입력하세요." />
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+      const vm = Vue.createApp({
+        name: 'App',
+        data() {
+          return {
+            score: 50,
+            isWarn: false,
+          };
+        },
+        computed: {
+          isWarnning() {
+            const score = this.score;
+            if (score < 1 || score > 100) {
+              this.isWarn = true;
+            } else {
+              this.isWarn = false;
+            }
+            return this.isWarn;
+          },
+        },
+      }).mount('#app');
+    </script>
+    <script src="./bootstrap.bundle.min.js"></script>
+  </body>
+</html>
