@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>TodoList</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        background-color: #f8f9fa;
+      }
+      .title {
+        text-align: center;
+        font-weight: bold;
+        font-size: 20pt;
+        color: #343a40;
+      }
+      .todo-done {
+        text-decoration: line-through;
+      }
+      .todo-done-bg {
+        background-color: rgb(80, 183, 71);
+      }
+      .container {
+        padding: 20px;
+        max-width: 600px;
+        margin: auto;
+      }
+      .panel-borderless {
+        border: 0;
+        box-shadow: none;
+      }
+      .pointer {
+        cursor: pointer;
+      }
+      .card {
+        margin-bottom: 15px;
+      }
+      .card-text {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 10px;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        background-color: #ffffff;
+      }
+      .card-text:hover {
+        background-color: #f1f3f5;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" class="container">
+      <div class="card card-body bg-light">
+        <div class="title">:: Todolist App</div>
+      </div>
+      <div class="card card-default card-borderless">
+        <div class="card-body">
+          <!-- 새 할 일 추가-->
+          <div class="d-flex">
+            <input
+              type="text"
+              class="form-control"
+              v-model="todo"
+              placeholder="할 일을 여기에 입력!" />
+            <button class="btn btn-primary w-auto" @click.stop="addTodo">
+              추가
+            </button>
+          </div>
+
+          <div class="d-flex justify-content-between mt-4 mb-4">
+            <div>전체 todo 개수 : <span>{{total}}</span></div>
+            <div>
+              완료 todo 개수 :
+              <span style="color: green">{{numsOfCompleted}}</span>
+            </div>
+            <div>
+              미완료 todo 개수 :
+              <span style="color: red">{{numsOfNotCompleted}}</span>
+            </div>
+          </div>
+          <!-- 할 일 목록-->
+          <div>
+            <div
+              class="card-text pointer"
+              v-for="todo in sorted"
+              :key="todo.id">
+              <input
+                type="checkbox"
+                :checked="todo.completed"
+                @change="toggleCompleted(todo.id)" />
+              <div :class="{ 'todo-done': todo.completed }">{{todo.todo}}</div>
+              <div>
+                <button
+                  class="btn btn-primary"
+                  @click.stop="deleteTodo(todo.id)">
+                  삭제
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+      // let ts = new Date().getTime();
+      let ts = () => Date.now();
+
+      let vm = Vue.createApp({
+        name: 'App',
+        data() {
+          return {
+            todo: '',
+            todolist: [
+              { id: ts, todo: '자전거 타기', completed: false },
+              { id: ts + 1, todo: '딸과 공원 산책', completed: true },
+              { id: ts + 2, todo: '일요일 애견 카페', completed: false },
+              { id: ts + 3, todo: 'Vue 원고 집필', completed: false },
+            ],
+          };
+        },
+        methods: {
+          addTodo() {
+            const todo = this.todo;
+            const todolist = this.todolist;
+            if (todo.trim() == '') {
+              return;
+            }
+            todolist.unshift({
+              id: ts + Math.random(),
+              todo: todo,
+              completed: false,
+            });
+            this.todo = '';
+            return todolist;
+          },
+          deleteTodo(id) {
+            this.todolist = this.todolist.filter((todo) => todo.id !== id);
+            return this.todolist;
+          },
+          toggleCompleted(id) {
+            const todolist = this.todolist;
+            todolist.forEach((todo) => {
+              if (todo.id == id) {
+                todo.completed = !todo.completed;
+              }
+            });
+          },
+        },
+        computed: {
+          sorted() {
+            return this.todolist.slice().sort((a, b) => {
+              if (a.completed === b.completed) {
+                return a.todo.localeCompare(b.todo);
+              }
+              return a.completed - b.completed;
+            });
+          },
+          total() {
+            return this.todolist.length;
+          },
+          numsOfCompleted() {
+            const todolist = this.todolist;
+            return todolist.filter((todo) => todo.completed).length;
+          },
+          numsOfNotCompleted() {
+            const todolist = this.todolist;
+            return todolist.filter((todo) => !todo.completed).length;
+          },
+        },
+      }).mount('#app');
+    </script>
+  </body>
+</html>
