@@ -1,22 +1,28 @@
 <!-- VueInit : vue3 기본 형태 스니펫 -->
 
 <template>
-  <div class="container">
-    <div class="card card-body bg-light">
-      <div class="title">🕒 TodoList App 💻</div>
+  <div class="container mt-5">
+    <div class="card shadow-sm border-0 mb-4">
+      <div class="card-body text-center bg-warning text-white rounded">
+        <h1 class="display-6 fw-bold">🕒 TodoList App 💻</h1>
+      </div>
     </div>
-    <div class="card card-default card-borderless">
+    <div class="card shadow-sm border-0">
       <div class="card-body">
         <InputTodo @add-todo="addTodo" />
 
         <!-- 카운트 컴포넌트 -->
-        <TodoCount :todolist="sortedList" :completedCount="completedCount" />
+        <div class="my-4">
+          <TodoCount :todolist="sortedList" :completedCount="completedCount" />
+        </div>
 
         <!-- 목록 컴포넌트 -->
-        <TodoList
-          v-bind:todolist="sortedList"
-          @toggle-completed="toggleCompleted"
-          @delete-todo="deleteTodo" />
+        <div class="mt-3">
+          <TodoList
+            v-bind:todolist="sortedList"
+            @toggle-completed="toggleCompleted"
+            @delete-todo="deleteTodo" />
+        </div>
       </div>
     </div>
   </div>

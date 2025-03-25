@@ -1,20 +1,22 @@
 <template>
   <div class="row mb-3">
     <div class="col">
-      <div class="input-group">
+      <div class="input-group shadow-sm rounded">
         <input
           id="msg"
           type="text"
-          class="form-control"
+          class="form-control border-0"
           name="msg"
-          placeholder="할일을 여기에 입력!"
+          placeholder="무엇을 하실 건가요?"
           v-model.trim="todo"
-          @keyup.enter.="addTodoHandler" />
-
-        <!-- 추가 버튼 클릭 시 작성된 할 일 내용을 todolist에 추가 -->
-        <span class="btn btn-primary input-group-addon" @click="addTodoHandler"
-          >추가</span
-        >
+          @keyup.enter="addTodoHandler"
+          style="background-color: #f8f9fa" />
+        <button
+          class="btn btn-primary text-white fw-bold"
+          @click="addTodoHandler"
+          style="background-color: #ff8a3d; border-color: #ff8a3d">
+          추가
+        </button>
       </div>
     </div>
   </div>

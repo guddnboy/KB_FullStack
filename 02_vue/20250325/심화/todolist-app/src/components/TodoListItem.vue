@@ -1,23 +1,31 @@
 <template>
   <li
     :key="todoitem.id"
-    class="list-group-item"
-    :class="{ 'list-group-item-success': todoitem.completed }">
-    <input
-      type="checkbox"
-      class="pointer me-3"
-      v-model="todoitem.completed"
-      @click="toggleCompletedHandler(todoitem.id)" />
+    class="list-group-item d-flex align-items-center justify-content-between border-0 shadow-sm mb-2 rounded"
+    style="background-color: #fffbe6">
+    <div class="d-flex align-items-center">
+      <input
+        type="checkbox"
+        class="form-check-input me-3"
+        v-model="todoitem.completed"
+        @click="toggleCompletedHandler(todoitem.id)" />
 
-    <span class="pointer" :class="{ 'todo-done': todoitem.completed }">
-      {{ todoitem.todo }} {{ todoitem.completed ? '(완료)' : '' }}
-    </span>
+      <span
+        class="flex-grow-1 fw-bold"
+        :class="{
+          'text-decoration-line-through text-muted': todoitem.completed,
+        }"
+        style="font-size: 1.1rem; color: #333">
+        {{ todoitem.todo }}
+      </span>
+    </div>
 
-    <span
-      class="float-end badge bg-secondary pointer"
-      @click.stop="deleteTodoHandler(todoitem.id)"
-      >삭제</span
-    >
+    <button
+      class="btn btn-sm text-white fw-bold"
+      style="background-color: #ff8a3d; border-color: #ff8a3d"
+      @click.stop="deleteTodoHandler(todoitem.id)">
+      삭제
+    </button>
   </li>
 </template>
 <script>

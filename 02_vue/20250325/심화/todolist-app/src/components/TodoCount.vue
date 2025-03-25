@@ -1,20 +1,24 @@
 <template>
   <div class="row mb-3">
     <div class="col-md text-center">
-      전체 todo 개수 : <span>{{ todolist.length }}</span>
+      <div class="p-3 border rounded shadow-sm">
+        <div class="text-muted">전체 Todo</div>
+        <div class="fs-4 fw-bold">{{ todolist.length }}</div>
+      </div>
     </div>
     <div class="col-md text-center">
-      <!-- 완료 todo 개수 : <span :class="completedCount && completed">{{completedCount}}</span> -->
-      완료 todo 개수 :
-      <span :class="{ completed: completedCount > 0 }">{{
-        completedCount
-      }}</span>
+      <div class="p-3 border rounded shadow-sm">
+        <div class="text-muted">완료된 Todo</div>
+        <div class="fs-4 fw-bold text-success">{{ completedCount }}</div>
+      </div>
     </div>
     <div class="col-md text-center">
-      미완료 todo 개수 :
-      <span :class="{ notCompleted: todolist.length - completedCount > 0 }">{{
-        todolist.length - completedCount
-      }}</span>
+      <div class="p-3 border rounded shadow-sm">
+        <div class="text-muted">미완료 Todo</div>
+        <div class="fs-4 fw-bold text-danger">
+          {{ todolist.length - completedCount }}
+        </div>
+      </div>
     </div>
   </div>
 </template>
