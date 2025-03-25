@@ -1,18 +1,20 @@
 <template>
   <div>
-    <CheckboxItem
-      v-for="idol in idols"
-      :key="idol.id"
-      :name="idol.name"
-      :checked="idol.checked"
-      :idols="idols" />
+    <h2>관심있는 K-POP 가수?</h2>
+    <hr />
+    <ul>
+      <CheckboxItem
+        v-for="idol in idols"
+        :name="idol.name"
+        :checked="idol.checked" />
+    </ul>
   </div>
 </template>
 <script>
-import CheckboxItem from './components/CheckboxItem.vue';
+import CheckboxItem from './components/CheckboxItem2.vue';
 
 export default {
-  name: 'App',
+  name: 'App2',
   components: { CheckboxItem },
   data() {
     return {

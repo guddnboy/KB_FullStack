@@ -4,6 +4,10 @@
 <script>
 export default {
   name: 'CheckboxItem',
-  props: ['name', 'checked'],
+  props: {
+    name: Number | String,
+    name: String,
+    checked: Boolean,
+  },
 };
 </script>
