@@ -8,7 +8,7 @@ export default {
   name: 'Child3',
 };
 </script>
-<style scoped>
+<style module>
 .child {
   background-color: orange;
   border: solid 1px black;
