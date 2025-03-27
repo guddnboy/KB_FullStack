@@ -24,7 +24,7 @@
 <script setup>
 import { ref } from 'vue';
 
-const props = defineProps({ content: String });
+const props = defineProps({ type: String });
 const emit = defineEmits(['add-todo']);
 const todo = ref(props.content);
 
