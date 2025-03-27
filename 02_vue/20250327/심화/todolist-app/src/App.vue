@@ -64,7 +64,7 @@ const addTodo = (receiveTodo) => {
     todo: receiveTodo,
     completed: false,
   });
-  todo = '';
+  todo.value = '';
 };
 
 const deleteTodo = (id) => {
