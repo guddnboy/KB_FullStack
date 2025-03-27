@@ -41,24 +41,4 @@ const toggleCompletedHandler = (id) => {
 const deleteTodoHandler = (id) => {
   emit('delete-todo', id);
 };
-// export default {
-//   name: 'TodoListItem',
-
-//   // 부모로부터 전달 받은 데이터 수신 + 유효성 검사
-//   props: {
-//     todoitem: { type: Object, required: true },
-//   },
-//   methods: {
-//     toggleCompletedHandler(id) {
-//       this.$emit('toggle-completed', id);
-//     },
-//     deleteTodoHandler(id) {
-//       this.$emit('delete-todo', id);
-//     },
-//   },
-
-//   // 부모 컴포넌트로 발산되는 이벤트 유효성 검사
-//   // (보통 특정 이벤트가 발신되는게 맞는지 확인하는 용도로 사용)
-//   emits: ['toggle-completed', 'delete-todo'],
-// };
 </script>

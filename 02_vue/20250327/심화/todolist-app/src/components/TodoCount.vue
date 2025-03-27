@@ -27,12 +27,4 @@ const props = defineProps({
   todolist: { type: Array, required: true },
   completedCount: { type: Number, required: true },
 });
-
-// export default {
-//   name: 'TodoCount',
-//   props: {
-//     todolist: { type: Array, required: true },
-//     completedCount: { type: Number, required: true },
-//   },
-// };
 </script>

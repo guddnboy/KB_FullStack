@@ -20,16 +20,4 @@ const props = defineProps({
   todolist: { type: Array, required: true },
 });
 const emit = defineEmits(['toggle-completed', 'delete-todo']);
-
-// export default {
-//   name: 'TodoList',
-//   components: { TodoListItem },
-//   // 부모로부터 전달 받은 데이터 수신 + 유효성 검사
-//   props: {
-//     todolist: { type: Array, required: true },
-//   },
-
-//   // 부모 컴포넌트로 방출되는 이벤트 검사
-//   emits: ['toggle-completed', 'delete-todo'],
-// };
 </script>
