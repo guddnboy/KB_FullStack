@@ -29,7 +29,7 @@ const emit = defineEmits(['add-todo']);
 const todo = ref(props.content);
 
 const addTodoHandler = () => {
-  if (todo.value.length >= 3) {
+  if (todo.value && todo.value.length >= 3) {
     // 작성된 할 일 (this.todo)을
     // 부모 컴포넌트 (App.vue)로 전달하기!
     // -> 이벤트 발신(emit) 이용하기!
