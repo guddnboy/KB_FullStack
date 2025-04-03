@@ -34,7 +34,8 @@ const currentRoute = useRoute();
 // console.log('currentRoute : ', currentRoute.params.id);
 
 // 입력된 id 또는 /get/:id 파라미터에 전달된 값 콘솔에 출력
-const id = ref('1');
+const id = ref(currentRoute.params.id);
+
 const state = reactive({ todo: {} });
 
 const getTodo = async () => {
