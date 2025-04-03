@@ -23,7 +23,7 @@ import axios from 'axios';
 const BASEURI = '/api/todos';
 
 // 상태 변수를 reactive로 선언하여 반응형으로 만듦
-const states = reactive({ todoList: [] });
+const states = reactive({ todoList: [], isLoading: false });
 
 /********* axios 요청 처리 함수 *********/
 
