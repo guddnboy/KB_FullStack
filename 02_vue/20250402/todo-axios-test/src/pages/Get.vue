@@ -40,7 +40,7 @@ const state = reactive({ todo: {} });
 
 const getTodo = async () => {
   try {
-    const response = await axios.get(`/api/${id.value}`);
+    const response = await axios.get(`/api/todos/${id.value}`);
     state.todo = response.data;
   } catch (err) {
     console.error(err.message);

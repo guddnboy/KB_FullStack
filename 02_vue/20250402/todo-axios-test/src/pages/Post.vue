@@ -39,7 +39,7 @@ const state = reactive({
 
 const addTodo = async () => {
   try {
-    const response = await axios.post('/api', state.todo);
+    const response = await axios.post('/api/todos', state.todo);
     const result = response.data;
     const id = result.id;
 
