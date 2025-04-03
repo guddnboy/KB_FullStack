@@ -34,14 +34,7 @@ const router = createRouter({
       component: () => import('../pages/AddTodo.vue'),
     },
 
-    /* 할 일 상세 페이지 */
-    {
-      path: '/todos/:id',
-      name: 'editTodo',
-      component: () => import('../pages/EditTodo.vue'),
-    },
-
-    /* 할 일 수정 페이지지 */
+    /* 할 일 수정 페이지 */
     {
       path: '/todos/edit/:id',
       name: 'editTodo',

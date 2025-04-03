@@ -1,3 +1,10 @@
 {
-  "todos": []
+  "todos": [
+    {
+      "id": "61ad",
+      "todo": "예시",
+      "desc": "할 일을 추가해보기",
+      "done": false
+    }
+  ]
 }
