@@ -28,8 +28,8 @@ jobs:
         run: |
           mkdir -p 03_JAVA/$TODAY/기본
           mkdir -p 03_JAVA/$TODAY/심화
-          touch 03_JAVA/$TODAY/기본/01.html
-          touch 03_JAVA/$TODAY/심화/01.html
+          touch 03_JAVA/$TODAY/기본/01.java
+          touch 03_JAVA/$TODAY/심화/01.java
 
       - name: commit and push
         env:
