@@ -14,14 +14,22 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up current date
-        run: echo "TODAY=$(date -d '+1 day' '+%Y%m%d')" >> $GITHUB_ENV
+        run: |
+          TODAY=$(date -d '+1 day' '+%Y%m%d')
+          DAY_OF_WEEK=$(date -d '+1 day' '+%u') # 1 (월요일) ~ 7 (일요일)
+          if [[ "$DAY_OF_WEEK" -eq 6 || "$DAY_OF_WEEK" -eq 7 ]]; then
+          echo "주말이므로 작업을 중단합니다."
+          exit 0
+
+          fi
+          echo "TODAY=$TODAY" >> $GITHUB_ENV
 
       - name: 폴더 생성 및 파일 생성
         run: |
-          mkdir -p 02_vue/$TODAY/기본
-          mkdir -p 02_vue/$TODAY/심화
-          touch 02_vue/$TODAY/기본/01.html
-          touch 02_vue/$TODAY/심화/01.html
+          mkdir -p 03_JAVA/$TODAY/기본
+          mkdir -p 03_JAVA/$TODAY/심화
+          touch 03_JAVA/$TODAY/기본/01.html
+          touch 03_JAVA/$TODAY/심화/01.html
 
       - name: commit and push
         env:
@@ -29,6 +37,6 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add 02_vue/$TODAY
-          git commit -m "폴더 생성 : 02_vue/$TODAY" || exit 0  # 변경 사항 없으면 에러 방지
+          git add 03_JAVA/$TODAY
+          git commit -m "폴더 생성 : 03_JAVA/$TODAY" || exit 0  # 변경 사항 없으면 에러 방지
           git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git HEAD:main
