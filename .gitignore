@@ -12,3 +12,5 @@ node_modules/
 
 -KB-Git_practice/
 exercise/
+
+*.xml
