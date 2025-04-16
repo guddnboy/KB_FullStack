@@ -22,7 +22,9 @@ public class IfAndWhile_05 {
                 total -= withdraw;
             case 3:
                 System.out.println(total);
-            case 4, default:
+            case 4:
+                break;
+            default:
                 break;
         }
     }
