@@ -1,0 +1,100 @@
+plugins {
+    id 'java'  // Java 컴파일 및 빌드 기능 제공
+    id 'war'   // WAR 파일 생성을 위한 웹 애플리케이션 플러그인
+}
+
+// 프로젝트 기본 정보 설정
+group 'org.scoula'        // 프로젝트 그룹 ID
+version '1.0-SNAPSHOT'    // 프로젝트 버전 (SNAPSHOT: 개발 중인 버전)
+
+// 의존성 라이브러리를 다운로드할 저장소 설정
+repositories {
+    mavenCentral()  // Maven 중앙 저장소 사용
+}
+
+// 프로젝트에서 사용할 라이브러리 버전을 변수로 정의
+// -> 버전 관리가 용이하고 일관성을 유지할 수 있음
+ext {
+    junitVersion = '5.10.2'        // JUnit 5 테스팅 프레임워크
+    springVersion = '5.3.39'       // Spring Framework 5.3.x 마지막 버전 (보안 패치 포함)
+    lombokVersion = '1.18.38'      // Lombok 라이브러리 최신 버전 (2025년 기준)
+    aspectjVersion = '1.9.20.1'    // AspectJ 최신 마이너 버전
+    log4j2Version = '2.24.1'       // Log4j2 최신 안정 버전 (보안 업데이트 포함)
+    jacksonVersion = '2.12.7'      // Spring 5.3.x와 호환되는 Jackson 최신 안정 버전
+}
+// Java 컴파일 버전 설정
+sourceCompatibility = '17'  // 소스 코드 호환성 (Java 17)
+targetCompatibility = '17'  // 컴파일된 바이트코드 타겟 버전 (Java 17)
+
+// Java 컴파일 태스크 설정
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'  // 소스 파일 인코딩을 UTF-8로 설정
+}
+
+// 프로젝트 의존성 라이브러리 선언 (최신 버전으로 업데이트)
+dependencies {
+
+    // ===== Spring Framework 관련 의존성 =====
+    // Spring Core 컨테이너 - IoC/DI 기능 제공 (5.3.39 - 마지막 5.3.x 버전, 보안 패치 포함)
+    implementation ("org.springframework:spring-context:${springVersion}")
+            { exclude group: 'commons-logging', module: 'commons-logging' } // commons-logging 제외 (Log4j2 사용)
+
+    // Spring MVC - 웹 애플리케이션 개발을 위한 프레임워크
+    implementation "org.springframework:spring-webmvc:${springVersion}"
+
+    // JSR-330 의존성 주입 표준 어노테이션 지원 (@Inject 등)
+    implementation 'javax.inject:javax.inject:1'
+
+    // ===== AOP (Aspect-Oriented Programming) 관련 의존성 =====
+    // AspectJ 런타임 - AOP 기능 실행을 위한 라이브러리 (최신 마이너 버전)
+    implementation "org.aspectj:aspectjrt:${aspectjVersion}"
+    // AspectJ 위버 - 컴파일/로드 타임에 AOP 적용 (최신 마이너 버전)
+    implementation "org.aspectj:aspectjweaver:${aspectjVersion}"
+
+    // ===== 웹 개발 관련 의존성 (JSP, Servlet, JSTL) =====
+    // Java Servlet API - 웹 애플리케이션 개발의 기본 API (안정 버전 유지)
+    implementation('javax.servlet:javax.servlet-api:4.0.1')
+    // JSP API - JSP 페이지 개발을 위한 API (컴파일 시에만 필요)
+    compileOnly 'javax.servlet.jsp:jsp-api:2.1'
+    // JSTL - JSP 표준 태그 라이브러리 (안정 버전 유지)
+    implementation 'javax.servlet:jstl:1.2'
+
+    // ===== 로깅 시스템 (Log4j2) - 최신 버전으로 업데이트 =====
+    // Log4j2 API - 로깅 인터페이스 (2.24.1 - 최신 안정 버전, 보안 개선 포함)
+    implementation "org.apache.logging.log4j:log4j-api:${log4j2Version}"
+    // Log4j2 Core - 로깅 구현체 (성능 및 보안 개선)
+    implementation "org.apache.logging.log4j:log4j-core:${log4j2Version}"
+    // SLF4J와 Log4j2 연결 - Spring에서 사용하는 SLF4J를 Log4j2로 연결
+    implementation "org.apache.logging.log4j:log4j-slf4j-impl:${log4j2Version}"
+
+    // ===== XML 처리 관련 =====
+    // Xerces XML 파서 - XML 내 한글 문자 처리 개선 (안정 버전 유지)
+    implementation 'xerces:xercesImpl:2.12.2'
+
+    // ===== 개발 편의성 도구 =====
+    // Lombok - 보일러플레이트 코드 자동 생성 (@Getter, @Setter, @ToString 등)
+    // 최신 버전으로 업데이트 (Java 17+ 지원 개선)
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"                    // 컴파일 시에만 필요
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"            // 어노테이션 처리기
+
+    // ===== JSON 처리 =====
+    // Jackson - JSON 직렬화/역직렬화 라이브러리 (Spring 5.3.x와 호환되는 최신 버전)
+    // 2.12.7은 Spring Framework 5.3.x와 호환성이 보장되는 안정적인 최신 버전
+    implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+
+    // ===== 테스트 관련 의존성 - 최신 버전으로 업데이트 =====
+    // Spring Test - Spring 애플리케이션 테스트 지원
+    testImplementation "org.springframework:spring-test:${springVersion}"
+
+    // 테스트에서도 Lombok 사용 (최신 버전)
+    testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    // JUnit 5 - 현대적인 Java 테스팅 프레임워크 (5.13.1 - 최신 안정 버전)
+    // junit-jupiter 하나로 API, Engine, Params 모두 포함
+    testImplementation("org.junit.jupiter:junit-jupiter:${junitVersion}")         // JUnit 5 통합 의존성
+}
+// 테스트 실행 설정
+test {
+    useJUnitPlatform()  // JUnit 5 플랫폼 사용하여 테스트 실행
+}
