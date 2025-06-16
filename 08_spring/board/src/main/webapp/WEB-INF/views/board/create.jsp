@@ -9,37 +9,41 @@
 <h1 class="page-header my-4">
     <i class="far fa-edit"></i> 새 글쓰기
 </h1>
-
-<div>
-    <!-- POST 방식으로 현재 URL에 전송 -->
-    <form method="post">
-        <div class="mb-3">
-            <label class="form-label">제목</label>
-            <input name="title" class="form-control" required>
+<!-- views/board/create.jsp -->
+<div class="container">
+    <form method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label>제목</label>
+            <input name="title" class="form-control">
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">작성자</label>
-            <input name="writer" class="form-control" required>
+        <div class="form-group">
+            <label>작성자</label>
+            <input name="writer" class="form-control">
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">내용</label>
-            <textarea class="form-control" name="content" rows="10" required></textarea>
+        <!-- 파일 업로드 필드 -->
+        <div class="form-group">
+            <label>첨부파일</label>
+            <input type="file"
+                   class="form-control-file border"
+                   multiple
+                   name="files"/>
         </div>
 
-        <div class="mt-4">
+        <div class="form-group">
+            <label>내용</label>
+            <textarea class="form-control" name="content" rows="10"></textarea>
+        </div>
+
+        <div class="form-group text-center">
             <button type="submit" class="btn btn-primary">
-                <i class="fas fa-check"></i> 확인
+                <i class="fas fa-check"></i> 등록
             </button>
-            <button type="reset" class="btn btn-secondary">
-                <i class="fas fa-undo"></i> 취소
+            <button type="reset" class="btn btn-warning">
+                <i class="fas fa-redo"></i> 취소
             </button>
-            <a href="list" class="btn btn-outline-primary">
-                <i class="fas fa-list"></i> 목록
-            </a>
         </div>
     </form>
 </div>
-
 <%@ include file="../layouts/footer.jsp" %>

@@ -1,16 +1,18 @@
 package org.scoula.board.controller;
 
+import org.scoula.board.domain.BoardAttachmentVO;
 import org.scoula.board.dto.BoardDTO;
 import org.scoula.board.service.BoardService;
+import org.scoula.common.util.UploadFiles;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import lombok.extern.log4j.Log4j2;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 
 @Log4j2                           // 로깅을 위한 Lombok 어노테이션
 @Controller                       // Spring MVC Controller 지정
@@ -92,4 +94,27 @@ public class BoardController {
 
         return "redirect:/board/list";           // 목록으로 리다이렉트
     }
+
+    /**
+     * 파일 다운로드 처리
+     * @param no 첨부파일 번호
+     * @param response HTTP 응답 객체
+     * @throws Exception
+     */
+    @GetMapping("/download/{no}")
+    @ResponseBody  // View를 사용하지 않고 직접 응답 데이터 전송
+    public void download(@PathVariable("no") Long no,
+                         HttpServletResponse response) throws Exception {
+
+        // 첨부파일 정보 조회
+        BoardAttachmentVO attach = service.getAttachment(no);
+
+        // 실제 파일 객체 생성
+        // (java.io.File)
+        File file = new File(attach.getPath());
+
+        // 파일 다운로드 처리
+        UploadFiles.download(response, file, attach.getFilename());
+    }
+
 }

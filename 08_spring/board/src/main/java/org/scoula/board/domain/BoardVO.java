@@ -1,5 +1,6 @@
 package org.scoula.board.domain;
 
+import java.util.List;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,10 +12,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor      // 모든 필드 생성자 생성
 @Builder                 // 빌더 패턴 적용
 public class BoardVO {
-    private Long no;           // 게시글 번호
-    private String title;      // 제목
-    private String content;    // 내용
-    private String writer;     // 작성자
-    private Date regDate;      // 등록일시
-    private Date updateDate;   // 수정일시
+    private Long no;
+    private String title;
+    private String content;
+    private String writer;
+    private Date regDate;
+    private Date updateDate;
+
+    // 첨부파일 목록 추가
+    private List<BoardAttachmentVO> attaches;
 }
