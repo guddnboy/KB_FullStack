@@ -17,8 +17,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.Objects;
-
 
 @ExtendWith(SpringExtension.class)  // JUnit5와 Spring 통합
 @WebAppConfiguration                // 웹 어플리케이션 컨텍스트 로드
@@ -50,9 +48,9 @@ class BoardControllerTest {
     // 목록 조회 테스트
     @Test
     public void list() throws Exception {
-        ModelMap model = Objects.requireNonNull(mockMvc.perform(MockMvcRequestBuilders.get("/board/list"))
-                        .andReturn()                    // MvcResult 반환
-                        .getModelAndView())             // ModelAndView 반환
+        ModelMap model = mockMvc.perform(MockMvcRequestBuilders.get("/board/list"))
+                .andReturn()                    // MvcResult 반환
+                .getModelAndView()             // ModelAndView 반환
                 .getModelMap();                // Model 데이터 추출
 
         log.info(model);                       // 모델 데이터 로그 출력
@@ -61,14 +59,14 @@ class BoardControllerTest {
     // 동륵 테스트
     @Test
     public void postCreate() throws Exception {
-        String resultPage = Objects.requireNonNull(mockMvc.perform(
-                                MockMvcRequestBuilders.post("/board/create")
-                                        .param("title", "테스트 새글 제목")      // 폼 파라미터 설정
-                                        .param("content", "테스트 새글 내용")
-                                        .param("writer", "user1")
-                        )
-                        .andReturn()
-                        .getModelAndView())
+        String resultPage = mockMvc.perform(
+                        MockMvcRequestBuilders.post("/board/create")
+                                .param("title", "테스트 새글 제목")      // 폼 파라미터 설정
+                                .param("content", "테스트 새글 내용")
+                                .param("writer", "user1")
+                )
+                .andReturn()
+                .getModelAndView()
                 .getViewName();                          // 리다이렉트 URL 확인
 
         log.info(resultPage);                    // "redirect:/board/list"
@@ -77,12 +75,12 @@ class BoardControllerTest {
     // 상세 조회 테스트
     @Test
     public void get() throws Exception {
-        ModelMap model = Objects.requireNonNull(mockMvc.perform(
-                                MockMvcRequestBuilders.get("/board/get")
-                                        .param("no", "1")                // 쿼리 파라미터 설정
-                        )
-                        .andReturn()
-                        .getModelAndView())
+        ModelMap model = mockMvc.perform(
+                        MockMvcRequestBuilders.get("/board/get")
+                                .param("no", "1")                // 쿼리 파라미터 설정
+                )
+                .andReturn()
+                .getModelAndView()
                 .getModelMap();
 
         log.info(model);                         // 조회된 게시글 데이터
@@ -91,15 +89,15 @@ class BoardControllerTest {
     // 수정 테스트
     @Test
     public void update() throws Exception {
-        String resultPage = Objects.requireNonNull(mockMvc.perform(
-                                MockMvcRequestBuilders.post("/board/update")
-                                        .param("no", "1")                // 수정할 게시글 번호
-                                        .param("title", "수정된 테스트 새글 제목")
-                                        .param("content", "수정된 테스트 새글 내용")
-                                        .param("writer", "user00")
-                        )
-                        .andReturn()
-                        .getModelAndView())
+        String resultPage = mockMvc.perform(
+                        MockMvcRequestBuilders.post("/board/update")
+                                .param("no", "1")                // 수정할 게시글 번호
+                                .param("title", "수정된 테스트 새글 제목")
+                                .param("content", "수정된 테스트 새글 내용")
+                                .param("writer", "user00")
+                )
+                .andReturn()
+                .getModelAndView()
                 .getViewName();
 
         log.info(resultPage);
@@ -108,12 +106,12 @@ class BoardControllerTest {
     // 삭제 테스트
     @Test
     public void delete() throws Exception {
-        String resultPage = Objects.requireNonNull(mockMvc.perform(
-                                MockMvcRequestBuilders.post("/board/delete")
-                                        .param("no", "25")               // 삭제할 게시글 번호
-                        )
-                        .andReturn()
-                        .getModelAndView())
+        String resultPage = mockMvc.perform(
+                        MockMvcRequestBuilders.post("/board/delete")
+                                .param("no", "25")               // 삭제할 게시글 번호
+                )
+                .andReturn()
+                .getModelAndView()
                 .getViewName();
 
         log.info(resultPage);
