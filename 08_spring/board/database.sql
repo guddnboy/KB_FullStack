@@ -12,6 +12,9 @@ CREATE TABLE tbl_board_attachment
     bno          INTEGER      NOT NULL,              -- 게시글 번호 (외래키)
     reg_date     DATETIME DEFAULT now(),             -- 등록 시간
 
-    -- 외래키 제약조건 설정
-    CONSTRAINT FOREIGN KEY (bno) REFERENCES tbl_board (no)
+    -- 외래키 제약조건 설정 + ON DELETE CASCADE
+    CONSTRAINT fk_board_attachment_board
+        FOREIGN KEY (bno)
+            REFERENCES tbl_board (no)
+            ON DELETE CASCADE
 );

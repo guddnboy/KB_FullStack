@@ -1,7 +1,7 @@
 <%-- views/board/get.jsp --%>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <%@ include file="../layouts/header.jsp" %>
@@ -22,6 +22,19 @@
     </div>
 </div>
 
+
+<!-- 첨부파일 목록 -->
+<div class="text-end">
+    <c:forEach var="file" items="${board.attaches}">
+        <div class="attach-file-item">
+            <a href="/board/download/${file.no}" class="file-link">
+                <i class="fa-solid fa-floppy-disk"></i>
+                    ${file.filename} (${file.fileSize})
+            </a>
+        </div>
+    </c:forEach>
+</div>
+
 <hr>
 
 <!-- 게시글 내용 -->
@@ -31,6 +44,11 @@
 
 <!-- 액션 버튼들 -->
 <div class="mt-4">
+    <%--
+        - 현재 주소 : /board/get
+        - 요청 주소 : /board/list
+    --%>
+
     <a href="list" class="btn btn-primary">
         <i class="fas fa-list"></i> 목록
     </a>
