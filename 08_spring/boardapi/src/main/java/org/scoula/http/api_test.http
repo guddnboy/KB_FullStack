@@ -1,0 +1,33 @@
+### 주석
+
+### 1. 게시글 목록 조회
+GET {{baseUrl}}
+
+### 2. 개별 게시글 조회
+GET {{baseUrl}}/3
+
+### 3. 게시글 등록
+
+< {%
+ request.variables.set('time', $timestamp)
+
+%}
+
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "title": "http 파일로 등록 요청 {{time}}",
+  "content": "테스트",
+  "writer": "테스터"
+}
+
+### 4. 게시글 수정
+PUT {{baseUrl}}/3
+Content-Type: application/json
+
+{
+  "title": "http 파일로 수정 요청",
+  "content": "수정된 내용",
+  "writer": "테스터"
+}
