@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,20 +17,36 @@ import org.springframework.web.multipart.MultipartFile;
 @Data                    // getter, setter, toString, equals, hashCode 생성
 @NoArgsConstructor       // 기본 생성자
 @AllArgsConstructor      // 모든 필드 생성자
-@Builder                 // 빌더 패턴
+@Builder
+@ApiModel(description = "게시글 DTO")// 빌더 패턴
 public class BoardDTO {
+    @ApiModelProperty(value = "업로드파일목록")
+    List<MultipartFile> files = new ArrayList<>(); //실제 업로드 된 파일(Multipart)목록
+
+    @ApiModelProperty(value = "게시글 ID", example = "1")
+
     private Long no;
+    @ApiModelProperty(value = "제목")
+
     private String title;
+    @ApiModelProperty(value = "글본문")
+
     private String content;
+    @ApiModelProperty(value = "작성자")
+
     private String writer;
+    @ApiModelProperty(value = "등록일")
+
     private Date regDate;
+    @ApiModelProperty(value = "수정일")
+
     private Date updateDate;
+    //첨부파일
+    @ApiModelProperty(value = "첨부파일목록")
+
 
     // 첨부파일 정보
     private List<BoardAttachmentVO> attaches;
-
-    // 실제 업로드된 파일들 (form에서 전송됨)
-    private List<MultipartFile> files = new ArrayList<>();
 
     // VO → DTO 변환
     public static BoardDTO of(BoardVO vo) {
@@ -54,4 +72,6 @@ public class BoardDTO {
                 .updateDate(updateDate)
                 .build();
     }
+
+
 }

@@ -17,15 +17,13 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import static org.scoula.common.util.UploadFiles.upload;
-
 @Log4j2                      // 로깅
 @Service                     // Service 계층 컴포넌트
 @RequiredArgsConstructor     // final 필드 생성자 주입
 public class BoardServiceImpl implements BoardService {
 
     private static final String BASE_DIR = "/Users/guddn/Downloads";  // 파일 업로드 기본 경로
-    private final BoardMapper boardMapper;  // Mapper 의존성 주입
+    private final BoardMapper boardMapper;// Mapper 의존성 주입
 
     // 목록 조회 서비스
     @Override
@@ -53,39 +51,31 @@ public class BoardServiceImpl implements BoardService {
     // 게시글 등록 서비스
     @Transactional  // 여러 DB 작업을 하나의 트랜잭션으로 처리
     @Override
-    public void create(BoardDTO board) {
+    public BoardDTO create(BoardDTO board) {
         log.info("create......" + board);
-
-        // 1. 게시글 등록
-        BoardVO vo = board.toVo();         // DTO → VO 변환
-        boardMapper.create(vo);            // DB에 저장
-        board.setNo(vo.getNo());           // 생성된 PK를 DTO에 설정
-
-        // 2. 첨부파일 처리
+        BoardVO boardVO= board.toVo();
+        boardMapper.create(boardVO);
+// 파일 업로드 처리
         List<MultipartFile> files = board.getFiles();
-        if (files != null && !files.isEmpty()) {
-            upload(vo.getNo(), files);  // 게시글 번호가 필요하므로 게시글 등록 후 처리
+        if(files != null && !files.isEmpty()) {
+            upload(boardVO.getNo(), files);
         }
+        return get(boardVO.getNo()); // 등록된 게시글 조회 후 반환
     }
 
-    // 게시글 수정 서비스
     @Override
-    public boolean update(BoardDTO board) {
+    public BoardDTO update(BoardDTO board) {
         log.info("update......" + board);
-
-        int affectedRows = boardMapper.update(board.toVo());  // 영향받은 행 수 반환
-        return affectedRows == 1;                        // 1개 행이 수정되면 성공
+        boardMapper.update(board.toVo());
+        return get(board.getNo());
     }
-
-    // 게시글 삭제 서비스
     @Override
-    public boolean delete(Long no) {
+    public BoardDTO delete(Long no) {
         log.info("delete...." + no);
-
-        int affectedRows = boardMapper.delete(no);     // 삭제된 행 수 반환
-        return affectedRows == 1;                 // 1개 행이 삭제되면 성공
+        BoardDTO board = get(no);
+        boardMapper.delete(no);
+        return board;
     }
-
     /* 파일 첨부 관련 메서드 추가 */
 
     // 첨부파일 단일 조회
