@@ -3,16 +3,26 @@ package org.scoula.security.config;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
+import org.scoula.security.filter.AuthenticationErrorFilter;
+import org.scoula.security.filter.JwtAuthenticationFilter;
+import org.scoula.security.filter.JwtUsernamePasswordAuthenticationFilter;
+import org.scoula.security.handler.CustomAccessDeniedHandler;
+import org.scoula.security.handler.CustomAuthenticationEntryPoint;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
@@ -37,7 +47,13 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;   // CustomUserDetailsService 주입
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final AuthenticationErrorFilter authenticationErrorFilter;
+    private final CustomAccessDeniedHandler accessDeniedHandler;
+    private final CustomAuthenticationEntryPoint authenticationEntryPoint;
 
+    @Autowired
+    private JwtUsernamePasswordAuthenticationFilter jwtUsernamePasswordAuthenticationFilter;
 
     /**
      * 비밀번호 암호화기 Bean 등록
@@ -48,6 +64,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();  // BCrypt 해시 함수 사용
+    }
+
+    // AuthenticationManager 빈 등록
+    @Bean
+    public AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManager();
     }
 
 
@@ -74,43 +96,33 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        // // 1. 문자 인코딩 필터를 CSRF 필터보다 먼저 실행
-        // CSRF 필터보다 앞에 인코딩 필터 추가
-        // - CSRF 필터는 Spring Security 환경에서 기본적으로 활성화 되어있음!
-        http.addFilterBefore(encodingFilter(), CsrfFilter.class);
+        // 한글 인코딩 필터 설정
+        http.addFilterBefore(encodingFilter(), CsrfFilter.class)
+                // 인증 에러 필터
+                .addFilterBefore(authenticationErrorFilter, UsernamePasswordAuthenticationFilter.class)
+        // Jwt 인증 필터
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+        // 로그인 인증 필터
+                .addFilterBefore(jwtUsernamePasswordAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        // 2. 경로별 접근 권한 설정
-        http.authorizeRequests()
-                // 모든 사용자 허용
-                .antMatchers("/security/all").permitAll()
+        http.httpBasic().disable() // 기본 HTTP 인증 비활성화
+                .csrf().disable() // CSRF 비활성화
+                .formLogin().disable() // formLogin 비활성화  관련 필터 해제
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션 생성 모드 설정
 
-                // ADMIN만 허용
-                .antMatchers("/security/admin").access("hasRole('ROLE_ADMIN')")
+        // 예외 처리 설정
+        http.exceptionHandling()
+                .authenticationEntryPoint(authenticationEntryPoint)
+                .accessDeniedHandler(accessDeniedHandler);
 
-                // MEMBER, ADMIN 중 하나라도 만족하면 허용
-                .antMatchers("/security/member").access("hasAnyRole('ROLE_MEMBER', 'ROLE_ADMIN')")
-
-                // 로그인 사용자에게 허용 (예시)
-                .antMatchers("/board/write", "/board/modify", "/board/delete").authenticated();
-
-
-        // 3. 커스텀 로그인 설정
-        // 폼 기반 로그인 활성화 (모든 설정이 기본값)
-        http.formLogin()
-                // 커스텀 로그인 페이지 설정 (Security 기본 로그인 사용 X, 사용자가 만든 로그인 페이지 사용!)
-                .loginPage("/security/login")           // 로그인 폼 GET 요청 URL
-                .loginProcessingUrl("/security/login")  // 로그인 처리 POST 요청 URL
-                .defaultSuccessUrl("/");                // 로그인 성공 시 리다이렉트 URL
-
-
-        // 4. 로그아웃 설정
-        http.logout()
-                .logoutUrl("/security/logout")  // POST: 로그아웃 요청 URL
-                .invalidateHttpSession(true)    // 세션 무효화
-                .deleteCookies("remember-me", "JSESSION-ID")      // 쿠키 삭제
-                .logoutSuccessUrl("/security/logout");  // GET: 로그아웃 완료 후 이동할 페이지
+        http
+                .authorizeRequests() // 경로별 접근 권한 설정
+                .antMatchers(HttpMethod.OPTIONS).permitAll()
+                .antMatchers("/api/security/all").permitAll() // 모두 허용
+                .antMatchers("/api/security/member").access("hasRole('ROLE_MEMBER')") // ROLE_MEMBER 이상 접근 허용
+                .antMatchers("/api/security/admin").access("hasRole('ROLE_ADMIN')") // ROLE_ADMIN 이상 접근 허용
+                .anyRequest().authenticated(); // 나머지는 로그인 된 경우 모두 허용
     }
-
 
 
     /**
