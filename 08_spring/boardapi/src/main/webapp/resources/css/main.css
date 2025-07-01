@@ -1,0 +1,22 @@
+/*  https://noonnu.cc/ -> Noto Sans KR 웹 폰트 적용 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+    font-family: 'Noto Sans KR'; /* 모든 요소에 기본 폰트 적용 */
+}
+
+.avatar-sm {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%; /* 원형 아바타 */
+}
+
+.jumbotron {
+    background-image: url('/resources/images/background.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover; /* 배경 이미지 전체 커버 */
+    color: white;
+    padding: 2rem;
+    margin-top: 1.5rem;
+}

@@ -1,4 +1,6 @@
 -- 기존 테이블 삭제
+drop table if exists tbl_member_auth;
+drop table if exists tbl_member;
 
 -- 사용자 기본 정보 테이블
 create table tbl_member

@@ -1,8 +1,8 @@
 <script setup>
 import { reactive, computed } from 'vue';
 import config from '@/config';
-import MenuGroup from './menu/MenuGroup.vue';
-import AccountMenuGroup from './menu/AccountMenuGroup.vue';
+import MenuGroup from './layouts/menu/MenuGroup.vue';
+import AccountMenuGroup from './layouts/menu/AccountMenuGroup.vue';
 
 let state = reactive({ isNavShow: false });
 

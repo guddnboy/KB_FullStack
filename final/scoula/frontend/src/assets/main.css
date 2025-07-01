@@ -4,3 +4,23 @@
 * {
   font-family: 'Noto Sans KR';
 }
+
+/* 아바타 스타일 처리리 */
+.avatar {
+  border-radius: 50%; /* 원형 모양 */
+  border-color: gray;
+  background-color: #d8d8d8; /* 로딩 중 배경색 */
+}
+
+.avatar-sm {
+  width: 20px;
+  height: 20px;
+} /* 소형 아바타 */
+.avatar-md {
+  width: 40px;
+  height: 40px;
+} /* 중형 아바타 */
+.avatar-lg {
+  width: 80px;
+  height: 80px;
+} /* 대형 아바타 */

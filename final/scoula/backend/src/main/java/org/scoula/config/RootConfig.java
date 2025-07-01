@@ -33,6 +33,7 @@ import javax.sql.DataSource;
         "org.scoula.board.service",
         "org.scoula.member.service"  // 회원 서비스 스캔
 })
+
 public class RootConfig {
 
     // 현재는 기본 설정만 있는 상태
