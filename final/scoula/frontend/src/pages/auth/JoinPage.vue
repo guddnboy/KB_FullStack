@@ -68,7 +68,6 @@ const join = async () => {
 };
 </script>
 
-<
 <template>
   <div class="mt-5 mx-auto" style="width: 500px">
     <h1 class="my-5">

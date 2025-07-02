@@ -1,8 +1,9 @@
 <script setup>
 import { computed, reactive, ref } from 'vue';
 import { useAuthStore } from '@/stores/auth';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
+const cr = useRoute();
 const router = useRouter();
 const auth = useAuthStore();
 
@@ -15,14 +16,23 @@ const member = reactive({
 const error = ref('');
 const disableSubmit = computed(() => !(member.username && member.password));
 
+// 로그인 로직
 const login = async () => {
-  console.log(member);
   try {
-    await auth.login(member); // 인증 스토어의 login 액션 호출
-    router.push('/'); // 성공 시 홈페이지로 이동
+    // 인증 스토어를 통한 로그인 처리
+    await auth.login(member);
+    //router.push('/'); // 성공 시 홈페이지로 이동
+
+    // 리다이렉트 로직
+    if (cr.query.next) {
+      // 원래 접근하려던 페이지가 있는 경우
+      router.push({ name: cr.query.next });
+    } else {
+      // 일반 로그인인 경우 메인 페이지로
+      router.push('/');
+    }
   } catch (e) {
-    console.log('에러=======', e);
-    error.value = e.response.data; // 에러 메시지 표시
+    error.value = e.response.data;
   }
 };
 </script>

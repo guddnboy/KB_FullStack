@@ -81,12 +81,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * 한글 문자 인코딩 필터 생성
      * @return CharacterEncodingFilter 인스턴스
      */
-    public CharacterEncodingFilter encodingFilter() {
-        CharacterEncodingFilter encodingFilter = new CharacterEncodingFilter();
-        encodingFilter.setEncoding("UTF-8");           // UTF-8 인코딩 설정
-        encodingFilter.setForceEncoding(true);         // 강제 인코딩 적용
-        return encodingFilter;
-    }
+//    public CharacterEncodingFilter encodingFilter() {
+//        CharacterEncodingFilter encodingFilter = new CharacterEncodingFilter();
+//        encodingFilter.setEncoding("UTF-8");           // UTF-8 인코딩 설정
+//        encodingFilter.setForceEncoding(true);         // 강제 인코딩 적용
+//        return encodingFilter;
+//    }
 
 
     // AuthenticationManager 빈 등록 - JWT 토큰 인증에서 필요
@@ -103,32 +103,43 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     public void configure(HttpSecurity http) throws Exception {
-
         http
-                .addFilterBefore(encodingFilter(), CsrfFilter.class)// 한글 인코딩 필터 설정
-                .addFilterBefore(authenticationErrorFilter, UsernamePasswordAuthenticationFilter.class) // 인증 에러 필터
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // Jwt 인증필터
-                .addFilterBefore(jwtUsernamePasswordAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)  // API 로그인 인증 필터
-
-                // 예외 처리 설정
-                .exceptionHandling()
-                .authenticationEntryPoint(authenticationEntryPoint)  // 401 에러 처리
-                .accessDeniedHandler(accessDeniedHandler);           // 403 에러 처리
-
-
-        //  HTTP 보안 설정
-        http.httpBasic().disable()      // 기본 HTTP 인증 비활성화
-                .csrf().disable()           // CSRF 보호 비활성화 (REST API에서는 불필요)
-                .formLogin().disable()      // 폼 로그인 비활성화 (JSON 기반 API 사용)
-                .sessionManagement()        // 세션 관리 설정
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);  // 무상태 모드
-
-
-        http
-                .authorizeRequests() // 경로별 접근 권한 설정
-                .antMatchers(HttpMethod.OPTIONS).permitAll()
-                .anyRequest().authenticated(); // 현재는 모든 접근 허용 (개발 단계)
-    }
+        .addFilterBefore(authenticationErrorFilter, UsernamePasswordAuthenticationFilter.class)
+        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+        .addFilterBefore(jwtUsernamePasswordAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+        
+        .exceptionHandling()
+        .authenticationEntryPoint(authenticationEntryPoint)
+        .accessDeniedHandler(accessDeniedHandler)
+        
+        .and()
+        .httpBasic().disable()
+        .csrf().disable()
+        .formLogin().disable()
+        .sessionManagement()
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        
+        .and()
+        .authorizeRequests()
+        .antMatchers(HttpMethod.OPTIONS).permitAll()
+        
+        // 회원 관련 공개 API
+        .antMatchers(HttpMethod.GET, "/api/member/checkusername/**").permitAll()
+        .antMatchers(HttpMethod.POST, "/api/member").permitAll()
+        .antMatchers(HttpMethod.GET, "/api/member/*/avatar").permitAll()
+        
+        // 회원 관련 인증 필요 API
+        .antMatchers(HttpMethod.PUT, "/api/member/**").authenticated()
+        .antMatchers(HttpMethod.PUT, "/api/member", "/api/member/*/changepassword").authenticated()
+        
+        // 게시판 관련 인증 요구 경로
+        .antMatchers(HttpMethod.POST, "/api/board/**").authenticated()
+        .antMatchers(HttpMethod.PUT, "/api/board/**").authenticated()
+        .antMatchers(HttpMethod.DELETE, "/api/board/**").authenticated()
+        
+        // 나머지 요청에 대해서는 모두 허용
+        .anyRequest().permitAll();
+}
 
 
     /**
@@ -170,11 +181,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(
                 "/assets/**",      // 정적 리소스
                 "/*",              // 루트 경로의 파일들
-                "/api/member/**",   // 회원 관련 공개 API
+                // "/api/member/**",   // 회원 관련 공개 API <- 삭제
 
                 // Swagger 관련 URL은 보안에서 제외
                 "/swagger-ui.html", "/webjars/**",
                 "/swagger-resources/**", "/v2/api-docs"
         );
     }
+
+
+
 }

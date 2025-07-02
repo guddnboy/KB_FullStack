@@ -61,6 +61,12 @@ export const useAuthStore = defineStore('auth', () => {
     }
   };
 
+  // 프로필 변경 후 로컬 상태 동기화 액션
+  const changeProfile = (member) => {
+    state.value.user.email = member.email; // 이메일 업데이트
+    localStorage.setItem('auth', JSON.stringify(state.value)); // 로컬스토리지 동기화
+  };
+
   // 스토어 초기화 시 자동 실행
   load();
 

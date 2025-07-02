@@ -79,6 +79,13 @@ public class BoardServiceImpl implements BoardService {
 
         boardMapper.update(board.toVo());  // 게시글 수정 수행
 
+        /* ----- 추가 ----- */
+        // 파일 업로드처리
+        List<MultipartFile>files=board.getFiles();
+        if(files!=null&&!files.isEmpty()){
+            upload(board.getNo(), files);
+        }
+
         // 수정된 게시글 정보를 반환
         return get(board.getNo());
     }
@@ -140,6 +147,4 @@ public class BoardServiceImpl implements BoardService {
             }
         }
     }
-
-
 }

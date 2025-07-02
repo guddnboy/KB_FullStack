@@ -4,11 +4,15 @@ package org.scoula.board.controller;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.scoula.board.domain.BoardAttachmentVO;
 import org.scoula.board.dto.BoardDTO;
 import org.scoula.board.service.BoardService;
+import org.scoula.common.util.UploadFiles;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.util.List;
 
 @RestController                    // REST API 컨트롤러 선언 (@Controller + @ResponseBody)
@@ -94,12 +98,9 @@ public class BoardController {
             @ApiResponse(code = 400, message = "잘못된 요청입니다."),
             @ApiResponse(code = 500, message = "서버에서 오류가 발생했습니다.")
     })
-    @PostMapping("")
-    public ResponseEntity<BoardDTO> create(
-            @ApiParam(value = "게시글 객체", required = true)
-            @RequestBody BoardDTO board) {
-        log.info("============> 게시글 생성: " + board);
 
+    @PostMapping("")
+    public ResponseEntity<BoardDTO> create(BoardDTO board){
         // 새 게시글 생성 후 결과 반환
         BoardDTO createdBoard = service.create(board);
         return ResponseEntity.ok(createdBoard);
@@ -167,5 +168,17 @@ public class BoardController {
         // 삭제된 게시글 정보를 반환
         BoardDTO deletedBoard = service.delete(no);
         return ResponseEntity.ok(deletedBoard);
+    }
+
+    @GetMapping("/download/{no}")
+    public void download(@PathVariable Long no, HttpServletResponse response) throws Exception {
+        BoardAttachmentVO attachment = service.getAttachment(no);
+        File file = new File(attachment.getPath());
+        UploadFiles.download(response, file, attachment.getFilename());
+    }
+
+    @DeleteMapping("/deleteAttachment/{no}")
+    public ResponseEntity<Boolean> deleteAttachment(@PathVariable Long no) throws Exception {
+        return ResponseEntity.ok(service.deleteAttachment(no));
     }
 }
