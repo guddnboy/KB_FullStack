@@ -15,6 +15,59 @@ exercise/
 
 *.xml
 
+# === node / vue ===
+node_modules/
+dist/
+build/
+*.log
+
+# === Spring / Java / Gradle ===
+*.class
+*.jar
+*.war
+*.ear
+*.iml
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.ipr
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# Maven
+target/
+
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# gradle caches
+**/caches/
+**/wrapper/dists/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# logs
+*.log
+
+# environment
+.env
+.env.local
+.env.*.local
+
+# === VSCode ===
+.vscode/
+
+# === 기타 ===
+*.swp
+
 
 .gradle
 build/
